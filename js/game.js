@@ -3,7 +3,7 @@
   var height = window.innerHeight > 480 ? 480 : window.innerHeight;
   var gameScore = 0;
   var highScore = 0;
-  var SantaGame = {
+  var lariGame = {
     init: function() {
       this.game = new Phaser.Game(width, height, Phaser.CANVAS, '');
       this.game.state.add("load", this.load);
@@ -15,13 +15,12 @@
     },
     load: {
       preload: function() {
-        this.game.load.audio('drivin-home', 'assets/drivin-home-low.mp3');
-        this.game.load.audio('ho-ho-ho', 'assets/haha.mp3');
-        this.game.load.audio('hop', 'assets/jump-sound.mp3');
+        this.game.load.audio('Bayu', 'assets/Bayu.mp3');
+        this.game.load.audio('ho-ho-ho', 'assets/jatuh.mp3');
+        this.game.load.audio('hop', 'assets/loncat.mp3');
         this.game.load.image('platform', 'assets/jalan.png');
-        this.game.load.spritesheet('bayuu', 'assets/bayuu.png', 37, 52);
+        this.game.load.spritesheet('bayuu', 'assets/lari5.png', 37, 52);
         this.game.load.image('gambar-bg', 'assets/gambar-bg.png');
-        this.game.load.image('snowflake', 'assets/snowflake.png');
         this.game.load.image("logo", "assets/game-logo.png");
         this.game.load.image("instructions", "assets/cara-main.png");
         this.game.load.image("game-over", "assets/selesai.png");
@@ -81,7 +80,7 @@
         this.gameSpeed = 580;
         this.isGameOver = false;
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.music = this.game.add.audio("drivin-home");
+        this.music = this.game.add.audio("Bayu");
         this.music.loop = true;
         this.music.play();
         this.bg = this.game.add.tileSprite(0, 0, width, height, 'gambar-bg');
@@ -104,12 +103,12 @@
           plat.body.bounce.set(0);
         }
         this.lastPlatform = plat;
-        this.santa = this.game.add.sprite(100, this.game.world.height - 200, 'bayuu');
-        this.santa.animations.add("run");
-        this.santa.animations.play('run', 20, true);
-        this.game.physics.arcade.enable(this.santa);
-        this.santa.body.gravity.y = 1500;
-        this.santa.body.collideWorldBounds = true;
+        this.lari = this.game.add.sprite(100, this.game.world.height - 200, 'bayuu');
+        this.lari.animations.add("run");
+        this.lari.animations.play('run', 20, true);
+        this.game.physics.arcade.enable(this.lari);
+        this.lari.body.gravity.y = 1500;
+        this.lari.body.collideWorldBounds = true;
         this.emitter.makeParticles('snowflake');
         this.emitter.maxParticleScale = .02;
         this.emitter.minParticleScale = .001;
@@ -118,7 +117,7 @@
         this.emitter.width = this.game.world.width * 1.5;
         this.emitter.minRotation = 0;
         this.emitter.maxRotation = 40;
-        this.game.camera.follow(this.santa);
+        this.game.camera.follow(this.lari);
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.emitter.start(false, 0, 0);
@@ -142,15 +141,15 @@
           this.score.text = 'Score: ' + Math.floor(gameScore);
           this.currentFrame++;
           var moveAmount = this.gameSpeed / 100;
-          this.game.physics.arcade.collide(this.santa, this.platforms);
-          if (this.santa.body.bottom >= this.game.world.bounds.bottom) {
+          this.game.physics.arcade.collide(this.lari, this.platforms);
+          if (this.lari.body.bottom >= this.game.world.bounds.bottom) {
             this.isGameOver = true;
             this.endGame();
           }
-          if (this.cursors.up.isDown && this.santa.body.touching.down || this.spacebar.isDown && this.santa.body.touching.down || this.game.input.mousePointer.isDown && this.santa.body.touching.down || this.game.input.pointer1.isDown && this.santa.body.touching.down) {
+          if (this.cursors.up.isDown && this.lari.body.touching.down || this.spacebar.isDown && this.lari.body.touching.down || this.game.input.mousePointer.isDown && this.lari.body.touching.down || this.game.input.pointer1.isDown && this.lari.body.touching.down) {
             this.jumpSound = this.game.add.audio("hop");
             this.jumpSound.play();
-            this.santa.body.velocity.y = -500;
+            this.lari.body.velocity.y = -500;
           }
           if (this.particleInterval === this.currentFrame) {
             this.emitter.makeParticles('snowflake');
@@ -202,5 +201,5 @@
       },
     }
   };
-  SantaGame.init();
+  lariGame.init();
 })();
